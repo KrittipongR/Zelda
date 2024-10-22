@@ -105,6 +105,10 @@ class Room:
                             x=random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
                             y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
 
+        pot = GameObject(GAME_OBJECT_DEFS['pot'],
+                         x = random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
+                         y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
+
         def switch_function():
             if switch.state == "unpressed":
                 switch.state = "pressed"
@@ -114,8 +118,15 @@ class Room:
                 gSounds['door'].play()
 
         switch.on_collide = switch_function
+        
 
         self.objects.append(switch)
+        self.objects.append(pot)
+
+        def pot_function():
+            pass
+
+        pot.on_collide = pot_function
 
     def update(self, dt, events):
         if self.adjacent_offset_x != 0 or self.adjacent_offset_y != 0:

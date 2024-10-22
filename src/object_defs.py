@@ -15,7 +15,5 @@ class ObjectConf:
 
 GAME_OBJECT_DEFS = {
     'switch': ObjectConf('switch', gSwitch_image_list, 2, False, "unpressed", {'unpressed':1, 'pressed':0}, width=48, height=48),
-    'pot': {
-
-    }
+    'pot': ObjectConf('pot', gPot_image_list, 14, True, "pot", {"pot": 14, "broken": 52}, width=16, height=16) #Using the pot from Room image list #14
 }
