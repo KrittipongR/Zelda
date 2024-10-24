@@ -124,6 +124,17 @@ class Room:
         self.objects.append(pot)
 
         def pot_function():
+
+            #There was an attempt at making the pot solid
+
+            # if self.player.direction == 'left' and self.player.rect.x <= pot.x + pot.width:
+            #     self.player.ChangeCoord(x=pot.x+pot.width)
+            # elif self.player.direction == 'right' and self.player.rect.x + self.player.width >= pot.x:
+            #     self.player.ChangeCoord(x=pot.x-self.player.width)
+            # elif self.player.direction == 'up' and self.player.rect.y + self.height/2 <= pot.y + pot.height /2:
+            #     self.player.ChangeCoord(y=pot.y+pot.height /2)
+            # elif self.player.direction == 'down' and self.player.rect.y + self.player.height >= pot.y:
+            #     self.player.ChangeCoord(y=pot.y-self.player.height)
             pass
 
         pot.on_collide = pot_function
@@ -152,6 +163,11 @@ class Room:
             object.update(dt)
             if self.player.Collides(object):
                 object.on_collide()
+                if object.type == 'pot':
+                    pressedKey = pygame.key.get_pressed()
+                    if pressedKey[pygame.K_f]:
+                        self.objects.remove(object)
+
 
 
 

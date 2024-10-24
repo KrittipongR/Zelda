@@ -53,7 +53,6 @@ class PlayerWalkState(EntityWalkState):
         #move and bump to the wall check
         super().update(dt, events)
 
-
         if self.bumped:
             if self.entity.direction == 'left':
                 #temporal move to the wall (bumping effect)
@@ -65,7 +64,7 @@ class PlayerWalkState(EntityWalkState):
                         self.dungeon.BeginShifting(-WIDTH, 0)
 
                 self.entity.x = self.entity.x + PLAYER_WALK_SPEED * dt
-
+                
             elif self.entity.direction == 'right':
                 self.entity.x = self.entity.x + PLAYER_WALK_SPEED * dt
 
@@ -95,3 +94,5 @@ class PlayerWalkState(EntityWalkState):
                         self.dungeon.BeginShifting(0,  HEIGHT)
 
                 self.entity.y = self.entity.y - PLAYER_WALK_SPEED * dt
+
+        
