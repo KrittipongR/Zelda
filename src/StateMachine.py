@@ -9,7 +9,7 @@ class StateMachine:
         self.states = states
 
     def Change(self, state_name, enter_params=None):
-        assert(self.states[state_name]) #
+        assert(self.states[state_name])
         if self.current:
             self.current.Exit()
         self.current = self.states[state_name]

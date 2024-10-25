@@ -5,18 +5,19 @@ from src.HitBox import Hitbox
 import pygame
 from src.recourses import *
 
-class PlayerAttackState(BaseState):
+class PlayerCarryState(BaseState):
     def __init__(self, player, dungeon=None):
         self.player = player
         self.dungeon = dungeon
 
         self.player.curr_animation.Refresh()
-        self.player.ChangeAnimation("attack_"+self.player.direction)
+        self.player.ChangeAnimation("carry_pot_"+self.player.direction)
+                            
 
 
     def Enter(self, params):
-        #sounds
-        self.player.offset_x = 24
+        
+        self.player.offset_x = 0
         self.player.offset_y = 15
 
         direction = self.player.direction
@@ -42,30 +43,39 @@ class PlayerAttackState(BaseState):
             hitbox_x = self.player.x
             hitbox_y = self.player.y + self.player.height
 
-        self.sword_hitbox = Hitbox(hitbox_x, hitbox_y, hitbox_width, hitbox_height)
+        # self.pick_hitbox = Hitbox(hitbox_x, hitbox_y, hitbox_width, hitbox_height)
 
         self.player.curr_animation.Refresh()
-        print("Attack")
-        self.player.ChangeAnimation("attack_"+self.player.direction)
+        print("Picking up Pot")
+        self.player.ChangeAnimation("carry_pot_"+self.player.direction)
 
     def Exit(self):
         pass
 
     def update(self, dt, events):
-        for entity in self.dungeon.current_room.entities:
-            if entity.Collides(self.sword_hitbox) and not entity.invulnerable:
-                entity.Damage(1)
-                entity.SetInvulnerable(0.2)
-                gSounds['hit_enemy'].play()
+        # for entity in self.dungeon.current_room.entities:
+        #     if entity.Collides(self.sword_hitbox) and not entity.invulnerable:
+        #         entity.Damage(1)
+        #         entity.SetInvulnerable(0.2)
+        #         gSounds['hit_enemy'].play()
+
+        # for object in self.dungeon.current_room.objects:
+        #     object.update(dt)
+        #     if self.player.Collides(object):
+        #         object.on_collide()
+        #         if object.type == 'pot':
+        #             pressedKey = pygame.key.get_pressed()
+        #             if pressedKey[pygame.K_f]:
+        #                 object.state = 'picked'
 
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0
-            self.player.ChangeState("idle")  #check
+            self.player.ChangeState("carry_pot_idle") #check
 
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    self.player.ChangeState('swing_sword')
+        # for event in events:
+        #     if event.type == pygame.KEYDOWN:
+        #         if event.key == pygame.K_SPACE:
+        #             self.player.ChangeState('swing_sword')
 
 
     def render(self, screen):

@@ -2,9 +2,9 @@ from src.constants import *
 from src.states.entity.EntityWalkState import EntityWalkState
 import pygame, time
 
-class PlayerWalkState(EntityWalkState):
+class PlayerWalkCarryState(EntityWalkState):
     def __init__(self, player, dungeon):
-        super(PlayerWalkState, self).__init__(player, dungeon)
+        super(PlayerWalkCarryState, self).__init__(player, dungeon)
 
         self.entity.ChangeAnimation('down')
         self.dungeon = dungeon
@@ -20,23 +20,23 @@ class PlayerWalkState(EntityWalkState):
         pressedKeys = pygame.key.get_pressed()
         if pressedKeys[pygame.K_LEFT]:
             self.entity.direction = 'left'
-            self.entity.ChangeAnimation('left')
+            self.entity.ChangeAnimation('carry_left')
         elif pressedKeys[pygame.K_RIGHT]:
             self.entity.direction = 'right'
-            self.entity.ChangeAnimation('right')
+            self.entity.ChangeAnimation('carry_right')
         elif pressedKeys[pygame.K_DOWN]:
             self.entity.direction = 'down'
-            self.entity.ChangeAnimation('down')
+            self.entity.ChangeAnimation('carry_down')
         elif pressedKeys[pygame.K_UP]:
             self.entity.direction = 'up'
-            self.entity.ChangeAnimation('up')
+            self.entity.ChangeAnimation('carry_up')
         else:
-            self.entity.ChangeState('idle')
+            self.entity.ChangeState('carry_pot_idle')
 
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.entity.ChangeState('swing_sword')
+                    self.entity.ChangeState('throw_pot')
 
         super().update(dt, events)
 

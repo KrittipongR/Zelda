@@ -10,6 +10,13 @@ from src.Player import Player
 from src.states.entity.player.PlayerWalkState import PlayerWalkState
 from src.states.entity.player.PlayerIdleState import PlayerIdleState
 from src.states.entity.player.PlayerAttackState import PlayerAttackState
+
+#Pot related
+from src.states.entity.player.PlayerIdleCarryState import PlayerIdleCarryState
+from src.states.entity.player.PlayerWalkCarryState import PlayerWalkCarryState
+from src.states.entity.player.PlayerThrowState import PlayerThrowState
+from src.states.entity.player.PlayerCarryState import PlayerCarryState
+
 from src.StateMachine import StateMachine
 
 from src.world.Dungeon import Dungeon
@@ -27,8 +34,12 @@ class PlayState(BaseState):
         self.player.state_machine.SetScreen(pygame.display.get_surface())
         self.player.state_machine.SetStates({
             'walk': PlayerWalkState(self.player, self.dungeon),
-            'idle': PlayerIdleState(self.player),
+            'idle': PlayerIdleState(self.player, self.dungeon),
             'swing_sword': PlayerAttackState(self.player, self.dungeon),
+            'carry_pot': PlayerCarryState(self.player, self.dungeon),
+            'carry_pot_idle': PlayerIdleCarryState(self.player),
+            'walk_carry': PlayerWalkCarryState(self.player, self.dungeon),
+            'throw_pot': PlayerThrowState(self.player,self.dungeon),
         })
 
         self.player.ChangeState('walk')

@@ -4,8 +4,9 @@ from src.states.BaseState import BaseState
 import random
 
 class EntityIdleState(BaseState):
-    def __init__(self, entity):
+    def __init__(self, entity, dungeon=None):
         self.entity = entity
+        self.dungeon = dungeon
         self.entity.ChangeAnimation(self.entity.direction)
 
         # monster AI waiting

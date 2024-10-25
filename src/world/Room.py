@@ -11,6 +11,7 @@ from src.states.entity.EntityWalkState import EntityWalkState
 from src.StateMachine import StateMachine
 from src.GameObject import GameObject
 from src.object_defs import *
+from src.HitBox import Hitbox
 import pygame
 
 
@@ -105,10 +106,6 @@ class Room:
                             x=random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
                             y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
 
-        pot = GameObject(GAME_OBJECT_DEFS['pot'],
-                         x = random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
-                         y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
-
         def switch_function():
             if switch.state == "unpressed":
                 switch.state = "pressed"
@@ -119,31 +116,28 @@ class Room:
 
         switch.on_collide = switch_function
         
-
         self.objects.append(switch)
-        self.objects.append(pot)
 
-        def pot_function():
+        for i in range(NUMBER_OF_POTS):
+            pot = GameObject(GAME_OBJECT_DEFS['pot'],
+                         x = random.randint(MAP_RENDER_OFFSET_X + TILE_SIZE, WIDTH-TILE_SIZE*2 - 48),
+                         y=random.randint(MAP_RENDER_OFFSET_Y+TILE_SIZE, HEIGHT-(HEIGHT-MAP_HEIGHT*TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 48))
+            
+            def pot_function():
+                pass
 
-            #There was an attempt at making the pot solid
-
-            # if self.player.direction == 'left' and self.player.rect.x <= pot.x + pot.width:
-            #     self.player.ChangeCoord(x=pot.x+pot.width)
-            # elif self.player.direction == 'right' and self.player.rect.x + self.player.width >= pot.x:
-            #     self.player.ChangeCoord(x=pot.x-self.player.width)
-            # elif self.player.direction == 'up' and self.player.rect.y + self.height/2 <= pot.y + pot.height /2:
-            #     self.player.ChangeCoord(y=pot.y+pot.height /2)
-            # elif self.player.direction == 'down' and self.player.rect.y + self.player.height >= pot.y:
-            #     self.player.ChangeCoord(y=pot.y-self.player.height)
-            pass
-
-        pot.on_collide = pot_function
-
+            pot.on_collide = pot_function            
+            self.objects.append(pot)
+        
     def update(self, dt, events):
         if self.adjacent_offset_x != 0 or self.adjacent_offset_y != 0:
             return
 
+        #Update Player First
+
         self.player.update(dt, events)
+
+        #Entity deletion Logic
 
         for entity in self.entities:
             if entity.health <= 0:
@@ -159,14 +153,51 @@ class Room:
                 self.player.Damage(1)
                 self.player.SetInvulnerable(1.5)
 
+            for object in self.objects:
+                if object.type == 'pot':
+                    if object.state == 'flyU' or object.state == 'flyD' or object.state == 'flyL' or object.state == 'flyR':
+                        if entity.Collides(object):
+                            entity.Damage(10)
+                            entity.SetInvulnerable(0.2)
+                            self.objects.remove(object)
+                            gSounds['hit_enemy'].play()
+
+        #Object Update
+
         for object in self.objects:
             object.update(dt)
             if self.player.Collides(object):
                 object.on_collide()
-                if object.type == 'pot':
-                    pressedKey = pygame.key.get_pressed()
-                    if pressedKey[pygame.K_f]:
-                        self.objects.remove(object)
+            if object.type == 'pot':
+                if self.player.Collides(object) and pygame.key.get_pressed()[pygame.K_f]:
+                    self.player.ChangeState("carry_pot")
+                    object.state = 'picked'
+                if object.state == 'picked':
+                    object.x = self.player.x
+                    object.y = self.player.y - 40
+                    if pygame.key.get_pressed()[pygame.K_SPACE]:
+                        object.x = self.player.x
+                        object.y = self.player.y + (self.player.height - object.height)
+                        if self.player.direction == 'down':
+                            object.state = 'flyD'
+                        elif self.player.direction == 'up':
+                            object.state = 'flyU'
+                        elif self.player.direction == 'left':
+                            object.state = 'flyL'
+                        elif self.player.direction == 'right':
+                            object.state = 'flyR'
+                if object.state == 'flyD':
+                    object.y += POT_SPEED * dt
+                elif object.state == 'flyU':
+                    object.y -= POT_SPEED * dt
+                elif object.state == 'flyL':
+                    object.x -= POT_SPEED * dt
+                elif object.state == 'flyR':
+                    object.x += POT_SPEED * dt
+                if object.y + object.height >= HEIGHT - (HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE or object.y <= MAP_RENDER_OFFSET_Y + TILE_SIZE - object.height /2 or object.x <= MAP_RENDER_OFFSET_X + TILE_SIZE or object.x + object.width >= WIDTH - TILE_SIZE * 2 :
+                    gSounds['hit_enemy'].play()
+                    self.objects.remove(object)
+
 
 
 

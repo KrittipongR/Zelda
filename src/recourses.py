@@ -15,7 +15,19 @@ gPlayer_animation_list = {"down": sprite_collection["character_walk_down"].anima
                         "attack_down": sprite_collection["character_attack_down"].animation,
                         "attack_right": sprite_collection["character_attack_right"].animation,
                         "attack_up": sprite_collection["character_attack_up"].animation,
-                        "attack_left": sprite_collection["character_attack_left"].animation
+                        "attack_left": sprite_collection["character_attack_left"].animation,
+                        "throw_down": sprite_collection["character_throw_down"].animation,
+                        "throw_right": sprite_collection["character_throw_right"].animation,
+                        "throw_up": sprite_collection["character_throw_up"].animation,
+                        "throw_left": sprite_collection["character_throw_left"].animation,
+                        "carry_pot_down": sprite_collection["character_carry_down"].animation,
+                        "carry_pot_right": sprite_collection["character_carry_right"].animation,
+                        "carry_pot_up": sprite_collection["character_carry_up"].animation,
+                        "carry_pot_left": sprite_collection["character_carry_left"].animation,
+                        "carry_down": sprite_collection["character_walk_carry_down"].animation,
+                        "carry_right": sprite_collection["character_walk_carry_right"].animation,
+                        "carry_up": sprite_collection["character_walk_carry_up"].animation,
+                        "carry_left": sprite_collection["character_walk_carry_left"].animation,
 }
 
 gSkeleton_animation_list = {"down": sprite_collection["skeleton_walk_down"].animation,
