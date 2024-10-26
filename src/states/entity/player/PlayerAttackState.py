@@ -56,6 +56,14 @@ class PlayerAttackState(BaseState):
             if entity.Collides(self.sword_hitbox) and not entity.invulnerable:
                 entity.Damage(1)
                 entity.SetInvulnerable(0.2)
+                if self.player.direction == 'right':
+                    entity.x += 30
+                elif self.player.direction =='left':
+                    entity.x -= 30
+                elif self.player.direction =='up':
+                    entity.y -= 30
+                elif self.player.direction =='down':
+                    entity.y += 30
                 gSounds['hit_enemy'].play()
 
         if self.player.curr_animation.times_played > 0:
