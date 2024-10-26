@@ -109,9 +109,9 @@ class Room:
         def switch_function():
             if switch.state == "unpressed":
                 switch.state = "pressed"
-
-                for doorway in self.doorways:
-                    doorway.open = True
+                self.doorways[random.randint(0,3)].open = True
+                # for doorway in self.doorways:
+                #     doorway.open = True
                 gSounds['door'].play()
 
         switch.on_collide = switch_function
@@ -198,7 +198,7 @@ class Room:
                 elif object.state == 'flyR':
                     object.x += POT_SPEED * dt
                 if object.y + object.height >= HEIGHT - (HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE or object.y <= MAP_RENDER_OFFSET_Y + TILE_SIZE - object.height /2 or object.x <= MAP_RENDER_OFFSET_X + TILE_SIZE or object.x + object.width >= WIDTH - TILE_SIZE * 2 :
-                    gSounds['hit_enemy'].play()
+                    gSounds['break'].play()
                     self.objects.remove(object)
 
 
