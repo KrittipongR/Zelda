@@ -35,7 +35,6 @@ class Room:
         self.doorways.append(Doorway('left', False, self))
         self.doorways.append(Doorway('right', False, self))
 
-
         # for collisions
         self.player = player
 
@@ -110,8 +109,6 @@ class Room:
             if switch.state == "unpressed":
                 switch.state = "pressed"
                 self.doorways[random.randint(0,3)].open = True
-                # for doorway in self.doorways:
-                #     doorway.open = True
                 gSounds['door'].play()
 
         switch.on_collide = switch_function
@@ -170,7 +167,6 @@ class Room:
                 object.on_collide()
             if object.type == 'pot':
                 if self.player.Collides(object) and pygame.key.get_pressed()[pygame.K_f]:
-                    #self.player.ChangeState("carry_pot")
                     self.player.state_machine.Change('carry_pot', {
                         'power':0,
                     })

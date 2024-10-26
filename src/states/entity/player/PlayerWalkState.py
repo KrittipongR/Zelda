@@ -32,7 +32,6 @@ class PlayerWalkState(EntityWalkState):
             self.entity.direction = 'up'
             self.entity.ChangeAnimation('up')
         else:
-            #self.entity.ChangeState('idle')
             self.entity.state_machine.Change('idle', {
                 'power':self.power,
             })
@@ -40,7 +39,6 @@ class PlayerWalkState(EntityWalkState):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    #self.entity.ChangeState('swing_sword')
                     self.entity.state_machine.Change('swing_sword', {
                         'power':self.power,
                     })

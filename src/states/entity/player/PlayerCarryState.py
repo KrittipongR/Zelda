@@ -13,7 +13,6 @@ class PlayerCarryState(BaseState):
         self.player.curr_animation.Refresh()
         self.player.ChangeAnimation("carry_pot_"+self.player.direction)
 
-
     def Enter(self, params):
         
         self.player.offset_x = 0
@@ -43,8 +42,6 @@ class PlayerCarryState(BaseState):
             hitbox_x = self.player.x
             hitbox_y = self.player.y + self.player.height
 
-        # self.pick_hitbox = Hitbox(hitbox_x, hitbox_y, hitbox_width, hitbox_height)
-
         self.player.curr_animation.Refresh()
         gSounds['carry'].play()
         print("Picking up Pot")
@@ -54,21 +51,6 @@ class PlayerCarryState(BaseState):
         pass
 
     def update(self, dt, events):
-        # for entity in self.dungeon.current_room.entities:
-        #     if entity.Collides(self.sword_hitbox) and not entity.invulnerable:
-        #         entity.Damage(1)
-        #         entity.SetInvulnerable(0.2)
-        #         gSounds['hit_enemy'].play()
-
-        # for object in self.dungeon.current_room.objects:
-        #     object.update(dt)
-        #     if self.player.Collides(object):
-        #         object.on_collide()
-        #         if object.type == 'pot':
-        #             pressedKey = pygame.key.get_pressed()
-        #             if pressedKey[pygame.K_f]:
-        #                 object.state = 'picked'
-
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0
             #self.player.ChangeState("carry_pot_idle") #check
@@ -76,15 +58,6 @@ class PlayerCarryState(BaseState):
                 'power':self.power,
             })
 
-        # for event in events:
-        #     if event.type == pygame.KEYDOWN:
-        #         if event.key == pygame.K_SPACE:
-        #             self.player.ChangeState('swing_sword')
-
-
     def render(self, screen):
         animation = self.player.curr_animation.image
         screen.blit(animation, (math.floor(self.player.x - self.player.offset_x), math.floor(self.player.y - self.player.offset_y)))
-
-        #hit box debug
-        #pygame.draw.rect(screen, (255, 0, 255), pygame.Rect(self.sword_hitbox.x, self.sword_hitbox.y, self.sword_hitbox.width, self.sword_hitbox.height))

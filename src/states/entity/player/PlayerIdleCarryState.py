@@ -19,7 +19,6 @@ class PlayerIdleCarryState(EntityIdleState):
         
         pressedKeys = pygame.key.get_pressed()
         if pressedKeys[pygame.K_LEFT] or pressedKeys [pygame.K_RIGHT] or pressedKeys [pygame.K_UP] or pressedKeys [pygame.K_DOWN]:
-            #self.entity.ChangeState('walk_carry')
             self.entity.state_machine.Change('walk_carry', {
                 'power':self.power,
             })
@@ -27,7 +26,6 @@ class PlayerIdleCarryState(EntityIdleState):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    #self.entity.ChangeState('throw_pot')
                     self.entity.state_machine.Change('throw_pot', {
                         'power':self.power,
                     })

@@ -32,7 +32,6 @@ class PlayerWalkCarryState(EntityWalkState):
             self.entity.direction = 'up'
             self.entity.ChangeAnimation('carry_up')
         else:
-            #self.entity.ChangeState('carry_pot_idle')
             self.entity.state_machine.Change('carry_pot_idle', {
                 'power':self.power,
             })
@@ -40,7 +39,6 @@ class PlayerWalkCarryState(EntityWalkState):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    #self.entity.ChangeState('throw_pot')
                     self.entity.state_machine.Change('throw_pot', {
                         'power':self.power,
                     })

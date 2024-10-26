@@ -18,7 +18,6 @@ class PlayerIdleState(EntityIdleState):
     def update(self, dt, events):
         pressedKeys = pygame.key.get_pressed()
         if pressedKeys[pygame.K_LEFT] or pressedKeys [pygame.K_RIGHT] or pressedKeys [pygame.K_UP] or pressedKeys [pygame.K_DOWN]:
-            #self.entity.ChangeState('walk')
             self.entity.state_machine.Change('walk', {
                 'power':self.power,
             })
@@ -26,13 +25,6 @@ class PlayerIdleState(EntityIdleState):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    #self.entity.ChangeState('swing_sword')
                     self.entity.state_machine.Change('swing_sword', {
                         'power':self.power,
                     })
-                # elif event.key == pygame.K_f:
-                #     for object in self.dungeon.current_room.objects:
-                #         if object.type == 'pot' and self.entity.Collides(object):
-                #             if self.entity.curr_animation.times_played > 0:
-                #                 self.entity.curr_animation.times_played = 0
-                #                 self.entity.ChangeState("carry_pot")  #check

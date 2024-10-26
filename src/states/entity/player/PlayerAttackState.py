@@ -13,7 +13,6 @@ class PlayerAttackState(BaseState):
         self.player.curr_animation.Refresh()
         self.player.ChangeAnimation("attack_"+self.player.direction)
 
-
     def Enter(self, params):
         #sounds
         self.player.offset_x = 24
@@ -78,7 +77,6 @@ class PlayerAttackState(BaseState):
 
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0
-            #self.player.ChangeState("idle")  #check
             self.player.state_machine.Change('idle', {
                 'power':self.power,
             })
@@ -86,7 +84,6 @@ class PlayerAttackState(BaseState):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    #self.player.ChangeState('swing_sword')
                     self.player.state_machine.Change('swing_sword', {
                         'power':self.power,
                     })
@@ -95,6 +92,3 @@ class PlayerAttackState(BaseState):
     def render(self, screen):
         animation = self.player.curr_animation.image
         screen.blit(animation, (math.floor(self.player.x - self.player.offset_x), math.floor(self.player.y - self.player.offset_y)))
-
-        #hit box debug
-        #pygame.draw.rect(screen, (255, 0, 255), pygame.Rect(self.sword_hitbox.x, self.sword_hitbox.y, self.sword_hitbox.width, self.sword_hitbox.height))
