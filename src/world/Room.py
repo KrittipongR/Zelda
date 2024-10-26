@@ -78,7 +78,7 @@ class Room:
                 self.tiles[y-1].append(id)
 
     def GenerateEntities(self):
-        types = ['skeleton']
+        types = ['skeleton','slime','bat','spider']
 
         for i in range(NUMBER_OF_MONSTER):
             type = random.choice(types)

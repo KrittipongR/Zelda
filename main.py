@@ -54,6 +54,3 @@ class GameMain:
 if __name__ == '__main__':
     main = GameMain()
     main.PlayGame()
-
-
-

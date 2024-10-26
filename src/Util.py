@@ -93,11 +93,13 @@ class SpriteManager:
                 "./sprite/CharacterAnimation.json",
                 "./sprite/SkeletonAnimation.json",
                 "./sprite/Heart.json",
-                #"./sprite/CharacterIdle.json",
                 "./sprite/CharacterAttack.json",
                 "./sprite/CharacterCarry.json",
                 "./sprite/CharacterThrow.json",
-                "./sprite/CharacterWalkCarry.json"
+                "./sprite/CharacterWalkCarry.json",
+                "./sprite/SlimeAnimation.json",
+                "./sprite/SpiderAnimation.json",
+                "./sprite/BatAnimation.json"
             ]
         )
 
