@@ -12,7 +12,6 @@ class PlayerCarryState(BaseState):
 
         self.player.curr_animation.Refresh()
         self.player.ChangeAnimation("carry_pot_"+self.player.direction)
-                            
 
 
     def Enter(self, params):
@@ -47,6 +46,7 @@ class PlayerCarryState(BaseState):
         # self.pick_hitbox = Hitbox(hitbox_x, hitbox_y, hitbox_width, hitbox_height)
 
         self.player.curr_animation.Refresh()
+        gSounds['carry'].play()
         print("Picking up Pot")
         self.player.ChangeAnimation("carry_pot_"+self.player.direction)
 

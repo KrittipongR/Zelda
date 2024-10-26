@@ -46,6 +46,7 @@ class PlayerThrowState(BaseState):
         # self.sword_hitbox = Hitbox(hitbox_x, hitbox_y, hitbox_width, hitbox_height)
 
         self.player.curr_animation.Refresh()
+        gSounds['carry'].play()
         print("Throw")
         self.player.ChangeAnimation("throw_"+self.player.direction)
 

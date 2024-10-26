@@ -24,7 +24,7 @@ class PlayerAttackState(BaseState):
 
         if direction == 'left':
             hitbox_width = 24
-            hitbox_height = 48
+            hitbox_height = 48  
             hitbox_x = self.player.x - hitbox_width
             hitbox_y = self.player.y + 6
         elif direction == 'right':
@@ -56,7 +56,16 @@ class PlayerAttackState(BaseState):
         for entity in self.dungeon.current_room.entities:
             if entity.Collides(self.sword_hitbox) and not entity.invulnerable:
                 entity.Damage(1)
+                self.power += 1
                 entity.SetInvulnerable(0.2)
+                if self.power >= 3:
+                    if self.player.health < 6:
+                        self.player.health +=1
+                        entity.Damage(2)
+                        gSounds['vampStrike'].play()
+                    print("Vampiric Strike!")
+                    self.power = 0
+                print("Current Power:",self.power)
                 if self.player.direction == 'right':
                     entity.x += 30
                 elif self.player.direction =='left':
