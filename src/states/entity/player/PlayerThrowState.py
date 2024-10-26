@@ -18,6 +18,7 @@ class PlayerThrowState(BaseState):
         #sounds
         self.player.offset_x = 0
         self.player.offset_y = 15
+        self.power = params['power']
 
         direction = self.player.direction
 
@@ -60,7 +61,10 @@ class PlayerThrowState(BaseState):
 
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0
-            self.player.ChangeState("idle")  #check
+            #self.player.ChangeState("idle")  #check
+            self.player.state_machine.Change('idle', {
+                'power':self.power,
+            })
 
         # for event in events:
         #     if event.type == pygame.KEYDOWN:

@@ -18,6 +18,7 @@ class PlayerAttackState(BaseState):
         #sounds
         self.player.offset_x = 24
         self.player.offset_y = 15
+        self.power = params['power']
 
         direction = self.player.direction
 
@@ -68,12 +69,18 @@ class PlayerAttackState(BaseState):
 
         if self.player.curr_animation.times_played > 0:
             self.player.curr_animation.times_played = 0
-            self.player.ChangeState("idle")  #check
+            #self.player.ChangeState("idle")  #check
+            self.player.state_machine.Change('idle', {
+                'power':self.power,
+            })
 
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.player.ChangeState('swing_sword')
+                    #self.player.ChangeState('swing_sword')
+                    self.player.state_machine.Change('swing_sword', {
+                        'power':self.power,
+                    })
 
 
     def render(self, screen):

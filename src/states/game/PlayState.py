@@ -42,7 +42,10 @@ class PlayState(BaseState):
             'throw_pot': PlayerThrowState(self.player,self.dungeon),
         })
 
-        self.player.ChangeState('walk')
+        #self.player.ChangeState('walk')
+        self.player.state_machine.Change('walk', {
+            'power':0,
+        })
 
     def update(self, dt, events):
         for event in events:

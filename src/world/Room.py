@@ -170,7 +170,10 @@ class Room:
                 object.on_collide()
             if object.type == 'pot':
                 if self.player.Collides(object) and pygame.key.get_pressed()[pygame.K_f]:
-                    self.player.ChangeState("carry_pot")
+                    #self.player.ChangeState("carry_pot")
+                    self.player.state_machine.Change('carry_pot', {
+                        'power':0,
+                    })
                     object.state = 'picked'
                 if object.state == 'picked':
                     object.x = self.player.x

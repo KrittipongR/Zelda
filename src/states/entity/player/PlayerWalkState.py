@@ -15,6 +15,7 @@ class PlayerWalkState(EntityWalkState):
     def Enter(self, params):
         self.entity.offset_y = 15
         self.entity.offset_x = 0
+        self.power = 0
 
     def update(self, dt, events):
         pressedKeys = pygame.key.get_pressed()
@@ -31,12 +32,18 @@ class PlayerWalkState(EntityWalkState):
             self.entity.direction = 'up'
             self.entity.ChangeAnimation('up')
         else:
-            self.entity.ChangeState('idle')
+            #self.entity.ChangeState('idle')
+            self.entity.state_machine.Change('idle', {
+                'power':self.power,
+            })
 
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.entity.ChangeState('swing_sword')
+                    #self.entity.ChangeState('swing_sword')
+                    self.entity.state_machine.Change('swing_sword', {
+                        'power':self.power,
+                    })
 
         super().update(dt, events)
 
